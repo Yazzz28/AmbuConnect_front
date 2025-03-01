@@ -1,0 +1,196 @@
+<div class="table-content">
+  <p-table
+    #dt
+    [(selection)]="selectedItems"
+    [filterDelay]="0"
+    [globalFilterFields]="globalFilterFields"
+    [paginator]="true"
+    [rowsPerPageOptions]="[10, 25, 50]"
+    [rows]="10"
+    [value]="data"
+    dataKey="id">
+    <ng-template #caption>
+      <div class="relative w-full">
+        <!-- table.component.html -->
+        <p-button (click)="showDialog()" icon="pi pi-plus" label="Add New"></p-button>
+        <p-dialog [modal]="true" [visible]="visible" maskStyleClass="backdrop-blur-sm" styleClass="!border-0 !bg-backGround modal-container">
+          <ng-template #headless>
+            <div class="flex flex-col form-container">
+              <!-- Header with close button -->
+              <div class="flex justify-between items-center mb-6 rounded-t-lg bg-header p-4 dialog-header">
+                <button (click)="closeDialog()" class="text-text text-xl close-button" type="button">
+                  <span class="pi pi-times"></span>
+                </button>
+              </div>
+
+              <!-- Dynamic form -->
+              <form (ngSubmit)="save()" [formGroup]="formGroup" class="dynamic-form">
+                <div class="p-fluid form-fields-container">
+                  <!-- Loop over the fields in formUpdate -->
+                  @for (fieldConfig of form; track $index) {
+                    <div class="form-field-wrapper">
+                      <div class="p-field field-container">
+                        <label [class.required]="fieldConfig.required" [for]="fieldConfig.field" class="text-text field-label">
+                          {{ fieldConfig.label }}
+                        </label>
+
+                        <!-- Handle different input types -->
+                        @if (
+                          fieldConfig.type &&
+                          [
+                            'text',
+                            'number',
+                            'tel',
+                            'address',
+                            'date',
+                            'email',
+                            'password',
+                            'url',
+                            'search',
+                            'range',
+                            'color',
+                            'time',
+                            'datetime-local',
+                            'month',
+                            'week',
+                          ].includes(fieldConfig.type)
+                        ) {
+                          <input
+                            [formControlName]="fieldConfig.field"
+                            [type]="fieldConfig.type"
+                            class="bg-backGroundPolygon border border-text rounded-md p-2 pl-10 w-25 focus:ring focus:ring-blue-300 outline-none text-text input-field" />
+                        }
+
+                        <!-- File input -->
+                        @if (fieldConfig.type === 'file') {
+                          <input
+                            [formControlName]="fieldConfig.field"
+                            class="bg-backGroundPolygon border border-text rounded-md p-2 pl-10 w-25 focus:ring focus:ring-blue-300 outline-none text-text file-input"
+                            type="file" />
+                        }
+
+                        <!-- Multiple files input -->
+                        @if (fieldConfig.type === 'file-multiple') {
+                          <input
+                            [formControlName]="fieldConfig.field"
+                            class="bg-backGroundPolygon border border-text rounded-md p-2 pl-10 w-25 focus:ring focus:ring-blue-300 outline-none text-text multiple-file-input"
+                            multiple
+                            type="file" />
+                        }
+
+                        <!-- Boolean input (checkbox) -->
+                        @if (fieldConfig.type === 'checkbox') {
+                          <input
+                            [formControlName]="fieldConfig.field"
+                            class="bg-backGroundPolygon border border-text rounded-md p-2 pl-10 w-25 focus:ring focus:ring-blue-300 outline-none text-text checkbox-input"
+                            type="checkbox" />
+                        }
+
+                        <!-- Checkbox group -->
+                        @for (option of fieldConfig.options; track $index) {
+                          <div class="checkbox-option">
+                            <input
+                              [formControlName]="fieldConfig.field"
+                              [value]="option.value"
+                              class="bg-backGroundPolygon border border-text rounded-md p-2 pl-10 w-25 focus:ring focus:ring-blue-300 outline-none text-text"
+                              type="checkbox" />
+                            {{ option.label }}
+                          </div>
+                        }
+
+                        <!-- Textarea -->
+                        @if (fieldConfig.type === 'textarea') {
+                          <textarea
+                            [formControlName]="fieldConfig.field"
+                            class="bg-backGroundPolygon border border-text rounded-md p-2 pl-10 w-25 focus:ring focus:ring-blue-300 outline-none text-text textarea-field"></textarea>
+                        }
+                      </div>
+                    </div>
+                  }
+                </div>
+
+                <!-- Buttons -->
+                <div class="flex gap-12 justify-center mt-6 button-container">
+                  <button (click)="closeDialog()" class="button-cancel-delete px-8 py-3 text-lg rounded-md cancel-button" type="button">
+                    Annuler
+                  </button>
+                  <button class="button-save px-8 py-3 text-lg rounded-md save-button" type="submit">Sauvegarder</button>
+                </div>
+              </form>
+            </div>
+          </ng-template>
+        </p-dialog>
+        <i class="pi pi-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+        <input
+          (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+          class="bg-backGroundPolygon border border-text rounded-md p-2 pl-10 w-25 focus:ring focus:ring-blue-300 outline-none text-text"
+          pInputText
+          placeholder="Rechercher"
+          type="text" />
+      </div>
+    </ng-template>
+
+    <ng-template #header>
+      <tr>
+        @for (col of columns; track $index) {
+          <ng-container>
+            <th [pSortableColumn]="col.field">
+              <div class="flex justify-between align-items-lg-start">
+                {{ col.header }}
+                <p-sortIcon [field]="col.field" />
+              </div>
+            </th>
+          </ng-container>
+        }
+        <th>Actions</th>
+      </tr>
+    </ng-template>
+
+    <ng-template #body let-rowData>
+      <tr class="p-selectable-row">
+        @for (col of columns; track $index) {
+          <ng-container>
+            <td>
+              <!-- Gérer les champs imbriqués comme 'adress.adress' -->
+              @if (col.field.includes('.')) {
+                <ng-container>
+                  {{ rowData.adress?.adress }}
+                </ng-container>
+              }
+              <!-- Pour les autres champs (firstname, lastname, phone, etc.) -->
+              @if (!col.field.includes('.')) {
+                <ng-container>
+                  {{ rowData[col.field] }}
+                </ng-container>
+              }
+            </td>
+          </ng-container>
+        }
+        <td>
+          <app-action-edit
+            [facadeService]="facadeService"
+            [fieldToShowTwo]="fieldToShowTwo"
+            [fieldToShow]="fieldToShow"
+            [formUpdate]="form"
+            [itemBase]="rowData"
+            [mainFieldsConfig]="mainFieldsConfig"
+            [nestedFieldsConfig]="nestedFieldsConfig">
+          </app-action-edit>
+        </td>
+        <td>
+          <app-action-delete
+            [facadeService]="facadeService"
+            [fieldToShowTwo]="fieldToShowTwo"
+            [fieldToShow]="fieldToShow"
+            [item]="rowData"></app-action-delete>
+        </td>
+      </tr>
+    </ng-template>
+
+    <ng-template #emptymessage>
+      <tr>
+        <td [attr.colspan]="columns.length + 2">Aucune donnée</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

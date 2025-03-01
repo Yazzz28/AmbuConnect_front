@@ -1,1 +1,417 @@
-/* You can add global styles to this file, and also import other style files */
+@layer tailwind-base, primeng, tailwind-utilities;
+
+@layer tailwind-base {
+  @tailwind base;
+}
+@import 'primeicons/primeicons.css';
+@layer tailwind-utilities {
+  @tailwind components;
+  @tailwind utilities;
+}
+
+$bg-opacity-border: rgba(8, 125, 234, 0.25); // background couleur #087DEA avec 25% d'opacité
+$border-color: #009dff; // couleur de la bordure #009DFF
+$bg-color: #087dea; // couleur de fond #087DEA
+// Variables SCSS
+$bg-opacity-border-red: rgba(234, 8, 8, 0.25); // Couleur #EA0808 avec 25% d'opacité
+$border-color-red: #ff1e00; // Bordure couleur #FF1E00
+// Variable pour le fond sans opacité
+$bg-color-red: #ff0000; // Couleur de fond #FF0000
+
+/* Variables de couleurs */
+:root {
+  font-family: 'Noto Sans Georgian', sans-serif;
+  padding: 0;
+  margin: 0;
+  --color-background: #ffffff; /* Blanc */
+  --color-text: #000000; /* Gris foncé */
+  --color-main-button: #0659a7;
+  --color-background-polygon: #eaf5fb;
+  --color-text-title: #0659a7;
+  --color-handle: #ffffff; /* Couleur du slider */
+  --color-checked-background: #0659a7; /* Fond activé */
+  --color-hover-background: #5c87c1; /* Fond au survol */
+  --color-disabled-background: #ddd; /* Fond désactivé */
+  --color-disabled-handle: #aaa; /* Couleur du slider désactivé */
+  --color-footer: #e8eff7; /* Couleur du footer */
+  --color-footer-text: #4a86bf; /* Couleur du texte du footer */
+  --color-icone-footer: #0659a7; /* Couleur des icônes du footer */
+  --header-modal: #a7c9e8;
+  --bg-cancel-button-modal: #087dea; /* Use the actual color value */
+  --border-cancel-button-modal: #009dff;
+  --bg-delete-button-modal: rgba(234, 8, 8, 0.25);
+  --border-delete-button-modal: #ff1e00;
+  --color-text-invalidated-form: #dc0024; /* Message d'erreur formulaire /,   --color-text-invalidated-form: #ff6b6b; / Message d'erreur formulaire */
+}
+
+.dark {
+  --color-background: #0a1a2f; /* Bleu nuit */
+  --color-text: #d0efff;
+  --color-main-button: #0659a7;
+  --color-background-polygon: #0f2541;
+  --color-text-title: #d0efff;
+  --color-handle: #ffffff; /* Couleur du slider */
+  --color-checked-background: #0659a7; /* Fond activé */
+  --color-hover-background: #4c78a7; /* Fond au survol */
+  --color-disabled-background: #444; /* Fond désactivé */
+  --color-disabled-handle: #aaa; /* Couleur du slider désactivé */
+  --color-footer: #31495e; /* Couleur du footer */
+  --color-footer-text: #4a86bf; /* Couleur du texte du footer */
+  --color-icone-footer: #e8eff7;
+  --header-modal: #0f2541;
+  --bg-cancel-button-modal: #087dea;
+  --bg-delete-button-modal: #ff0000;
+}
+
+/* Boutons "Annuler" et "Supprimer" */
+.button-cancel-delete {
+  background-color: var(--bg-cancel-button-modal); /* Fond du bouton "Annuler" */
+  border: 2px solid var(--border-cancel-button-modal); /* Bordure du bouton "Annuler" */
+  color: var(--color-text); /* Couleur du texte */
+  opacity: 0.85; /* Ajout d'une légère transparence */
+  transition:
+    opacity 0.3s ease,
+    background-color 0.3s ease; /* Transition fluide */
+}
+
+.button-cancel-delete:hover {
+  opacity: 1; /* Augmentation de l'opacité au survol */
+  background-color: var(--color-hover-background); /* Couleur du fond au survol */
+}
+
+.button-confirm-delete {
+  background-color: var(--bg-delete-button-modal); /* Fond du bouton "Supprimer" */
+  border: 2px solid var(--border-delete-button-modal); /* Bordure du bouton "Supprimer" */
+  color: var(--color-text); /* Couleur du texte */
+  opacity: 0.85; /* Ajout d'une légère transparence */
+  transition:
+    opacity 0.3s ease,
+    background-color 0.3s ease; /* Transition fluide */
+}
+
+.button-confirm-delete:hover {
+  opacity: 1; /* Augmentation de l'opacité au survol */
+  background-color: var(--color-hover-background); /* Couleur du fond au survol */
+}
+
+// Nav
+.p-menubar {
+  background-color: var(--color-background);
+  color: var(--color-text);
+  text-decoration-color: var(--color-text);
+}
+
+.p-menubar-root-list {
+  border-bottom: 1px solid var(--color-text);
+  gap: 2px;
+  width: auto;
+}
+
+.p-menubar-item-link {
+  border-bottom: var(--color-main-button) 1px solid;
+}
+
+.p-menubar-item-link:hover .p-menubar-item-content:hover {
+  background-color: var(--color-main-button);
+}
+
+/* max with 960px */
+@media (max-width: 960px) {
+  .p-toggleswitch .p-component {
+    background-color: var(--color-background); /* Fond du ToggleSwitch */
+  }
+
+  /* Positionner le bouton de la navbar (icône d'ouverture) en haut à droite */
+  .p-menubar-button {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    z-index: 1000;
+  }
+
+  .p-menubar-root-list {
+    position: fixed; /* Positionner de manière fixe */
+    top: 0; /* Commencer en haut de la fenêtre */
+    right: 0; /* Aligner à droite de la fenêtre */
+    height: 100vh; /* Prendre toute la hauteur de la fenêtre */
+    width: 80%; /* La largeur s'ajuste à 80% de la fenêtre, laissant 20% à droite */
+    background-color: var(--color-background); /* Couleur de fond (à ajuster) */
+    box-shadow: -2px 0px 10px rgba(0, 0, 0, 0.1); /* Ombre légère pour l'effet de séparation */
+  }
+
+  .p-menubar-button:hover {
+    background-color: var(--color-main-button);
+  }
+}
+
+/* dark mode acceuil */
+.clip-path-custom {
+  background-color: var(--color-background-polygon) !important;
+}
+
+h2 {
+  color: var(--color-text-title);
+}
+
+.p-toggleswitch.p-component {
+  background-color: var(--color-background); /* Fond du ToggleSwitch */
+}
+
+.p-toggleswitch.p-toggleswitch-checked {
+  background-color: var(--color-background); /* Fond activé */
+}
+
+.p-toggleswitch.p-toggleswitch-checked .p-toggleswitch-slider {
+  background-color: var(--color-main-button); /* Couleur du slider */
+}
+
+.table-content {
+  max-width: 90%; /* Limite la largeur de la table à 90% de son conteneur parent */
+  margin: 0 auto; /* Centre la table horizontalement */
+  padding: 1rem; /* Ajoute un peu de padding autour du conteneur */
+}
+
+/* Optionnel : Si vous voulez ajuster la taille de la table elle-même */
+p-table {
+  font-size: 0.875rem; /* Réduit la taille de la police pour une table plus compacte */
+  width: 100%; /* Assure que la table occupe toute la largeur du conteneur */
+}
+
+/* Réduit la taille des colonnes */
+p-table th,
+p-table td {
+  padding: 0.5rem; /* Réduit le padding des cellules */
+  text-align: left; /* Aligne le texte à gauche */
+}
+
+p-table .p-checkbox input {
+  width: 1rem; /* Réduit la taille des cases à cocher */
+  height: 1rem;
+}
+
+.p-datatable .p-datatable-header,
+.p-paginator,
+.p-datatable-table-container .p-datatable-thead > tr > th,
+.p-datatable-tbody > tr > td {
+  background-color: var(--color-background);
+  color: var(--color-text);
+}
+
+.p-button {
+  color: var(--color-text);
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 0.375rem;
+  opacity: 0.7;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition:
+    opacity 0.3s ease,
+    background-color 0.3s ease;
+}
+
+/* Cibler le p-button enfant de .button-delete */
+.button-delete .p-button {
+  color: rgb(255, 0, 56);
+  background: rgba(185, 106, 124, 0.8); /* Rouge vif similaire à bg-red-600 avec transparence */
+  border: rgba(225, 29, 72, 1) 2px solid;
+}
+
+.button-delete .p-button:hover {
+  background: rgba(190, 18, 60, 0.9); /* Couleur de fond légèrement plus foncée au survol avec un peu plus de transparence */
+}
+
+/* Cibler le p-button enfant de .button-edit */
+.button-edit .p-button {
+  color: rgb(0, 206, 138);
+  background: rgba(112, 185, 161, 0.8); /* Vert similaire à bg-green-500 (PrimeNG 'success') avec transparence */
+  border: rgba(16, 185, 129) 2px solid;
+}
+
+.button-edit .p-button:hover {
+  background: rgba(5, 150, 105, 0.9); /* Couleur de fond légèrement plus foncée au survol avec un peu plus de transparence */
+}
+
+/* Cibler l'icône dans les boutons pour .button-edit et .button-delete */
+.button .p-button-icon {
+  font-size: 1.2rem; /* Taille de l'icône légèrement plus petite */
+}
+
+/* Enlever le padding dans p-button */
+.button .p-button {
+  padding: 0; /* Enlève le padding par défaut pour ne pas affecter la taille du bouton */
+}
+
+//Footer
+
+.p-footer {
+  background-color: var(--color-footer);
+  color: var(--color-footer-text);
+}
+
+.text-icons {
+  color: var(--color-icone-footer); /* Couleur pour les icônes en mode clair */
+}
+
+.dark .text-icons {
+  color: var(--color-footer-text); /* Couleur des icônes en mode sombre */
+}
+
+.required:after {
+  content: ' *';
+  color: var(--color-text-invalidated-form);
+}
+
+/* Main container */
+.form-container {
+  width: 100%;
+  max-width: 90vw;
+  height: auto;
+  max-height: 90vh;
+  margin: auto;
+  padding: 1.5rem;
+  box-sizing: border-box;
+  overflow-y: auto;
+  border-radius: 8px;
+}
+
+.dialog-header .close-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.5rem;
+}
+
+/* Form structure */
+.dynamic-form {
+  width: 100%;
+}
+
+.dynamic-form .form-fields-container {
+  display: grid;
+  gap: 1rem;
+  padding: 0;
+}
+
+.dynamic-form .form-field-wrapper {
+  width: 100%;
+}
+
+.dynamic-form .field-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.dynamic-form .field-container .field-label {
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+.dynamic-form .field-container .field-label.required::after {
+  content: '*';
+  margin-left: 0.25rem;
+}
+
+/* Input fields general styling */
+.dynamic-form .field-container .input-field,
+.dynamic-form .field-container .file-input,
+.dynamic-form .field-container .multiple-file-input,
+.dynamic-form .field-container .textarea-field {
+  width: 100%;
+  padding: 0.75rem;
+  border-radius: 4px;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+.dynamic-form .field-container .textarea-field {
+  min-height: 80px;
+  resize: vertical;
+}
+
+.dynamic-form .field-container .input-field:focus,
+.dynamic-form .field-container .file-input:focus,
+.dynamic-form .field-container .textarea-field:focus {
+  outline: none;
+}
+
+/* Checkbox and radio groups */
+.dynamic-form .checkbox-group,
+.dynamic-form .radio-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.dynamic-form .checkbox-option,
+.dynamic-form .radio-option {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.dynamic-form .checkbox-option input,
+.dynamic-form .radio-option input {
+  width: auto;
+}
+
+/* Button container */
+.button-container {
+  position: sticky;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1rem;
+  z-index: 2;
+}
+
+.button-container .cancel-button,
+.button-container .save-button {
+  min-width: 120px;
+  text-align: center;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .form-container {
+    padding: 1rem;
+    max-width: 95vw;
+    max-height: 85vh;
+  }
+
+  .form-fields-container {
+    grid-template-columns: 1fr;
+  }
+
+  .button-container {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.5rem;
+  }
+
+  .button-container button {
+    width: 100%;
+  }
+}
+
+@media (min-width: 769px) {
+  .form-fields-container {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+
+  .form-field-wrapper:has(.textarea-field),
+  .form-field-wrapper:has(.checkbox-group),
+  .form-field-wrapper:has(.radio-group) {
+    grid-column: span 2;
+  }
+}

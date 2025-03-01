@@ -1,0 +1,67 @@
+.clip-path-custom {
+  clip-path: polygon(
+    calc(100% - 28.5px) calc(100% - 0.9px),
+    32.2px calc(100% - 0.9px),
+    26.973px calc(100% - 1.321px),
+    22.016px calc(100% - 2.54px),
+    17.395px calc(100% - 4.491px),
+    13.176px calc(100% - 7.108px),
+    9.425px calc(100% - 10.325px),
+    6.208px calc(100% - 14.076px),
+    3.591px calc(100% - 18.295px),
+    1.64px calc(100% - 22.916px),
+    0.421px calc(100% - 27.873px),
+    0px calc(100% - 33.1px),
+    80px 40px,
+    82px 30px,
+    85px 22px,
+    89px 15px,
+    95px 9px,
+    102px 5px,
+    110px 2px,
+    120px 0px,
+    calc(100% - 26.1225px) 0.0196px,
+    calc(100% - 21.568px) 0.2128px,
+    calc(100% - 17.2235px) 1.2112px,
+    calc(100% - 13.176px) 2.9464px,
+    calc(100% - 9.5125px) 5.35px,
+    calc(100% - 6.32px) 8.3536px,
+    calc(100% - 3.6855px) 11.8888px,
+    calc(100% - 1.696px) 15.8872px,
+    calc(100% - 0.4385px) 20.2804px,
+    100% 25px,
+    100% calc(100% - 29.4px),
+    calc(100% - 0.3714px) calc(100% - 24.7869px),
+    calc(100% - 1.4472px) calc(100% - 20.4072px),
+    calc(100% - 3.1698px) calc(100% - 16.3203px),
+    calc(100% - 5.4816px) calc(100% - 12.5856px),
+    calc(100% - 8.325px) calc(100% - 9.2625px),
+    calc(100% - 11.6424px) calc(100% - 6.4104px),
+    calc(100% - 15.3762px) calc(100% - 4.0887px),
+    calc(100% - 19.4688px) calc(100% - 2.3568px),
+    calc(100% - 23.8626px) calc(100% - 1.2741px),
+    calc(100% - 28.5px) calc(100% - 0.9px)
+  );
+  height: 100%;
+}
+
+@media (max-width: 770px) {
+  .clip-path-custom {
+    clip-path: inset(0 round 30px);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .clip-path-custom dl {
+    margin: 0;
+    padding: 6%;
+  }
+
+  div {
+    padding: 1%;
+    justify-content: center;
+  }
+}
