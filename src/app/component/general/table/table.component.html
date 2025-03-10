@@ -12,8 +12,11 @@
     <ng-template #caption>
       <div class="relative w-full">
         <!-- table.component.html -->
-        <p-button (click)="showDialog()" icon="pi pi-plus" label="Add New"></p-button>
-        <p-dialog [modal]="true" [visible]="visible" maskStyleClass="backdrop-blur-sm" styleClass="!border-0 !bg-backGround modal-container">
+        <button (click)="showDialog()"
+                class="w-10 bg-mainButton hover:bg-blue-700 text-text font-bold py-2 px-4 rounded"
+                type="button">Nouveau
+        </button>
+        <p-dialog [modal]="true" [(visible)]="visible" maskStyleClass="backdrop-blur-sm" styleClass="!border-0 !bg-backGround modal-container">
           <ng-template #headless>
             <div class="flex flex-col form-container">
               <!-- Header with close button -->
@@ -120,13 +123,15 @@
             </div>
           </ng-template>
         </p-dialog>
-        <i class="pi pi-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
-        <input
-          (input)="dt.filterGlobal($any($event.target).value, 'contains')"
-          class="bg-backGroundPolygon border border-text rounded-md p-2 pl-10 w-25 focus:ring focus:ring-blue-300 outline-none text-text"
-          pInputText
-          placeholder="Rechercher"
-          type="text" />
+        <div class="relative w-full flex justify-end">
+          <i class="pi pi-search left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+          <input
+            (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+            class="bg-backGroundPolygon border border-text rounded-md p-2 pl-10 w-25 focus:ring focus:ring-blue-300 outline-none text-text"
+            pInputText
+            placeholder="Rechercher"
+            type="text" />
+        </div>
       </div>
     </ng-template>
 

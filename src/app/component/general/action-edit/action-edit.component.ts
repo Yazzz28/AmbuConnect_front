@@ -35,104 +35,78 @@ export class ActionEditComponent {
   item: any = null;
   visible = false;
   form!: FormGroup;
-
   fb: FormBuilder = inject(FormBuilder);
 
-  // Method to create the form
+  // Crée le formulaire en générant les FormControls à partir de formUpdate
   createForm(): void {
-    const formControls = this.formUpdate.reduce((controls: Record<string, FormControl>, fieldConfig) => {
+    const controls = this.formUpdate.reduce((acc, fieldConfig) => {
       const value = this.getNestedValue(this.item, fieldConfig.field);
-      controls[fieldConfig.field] = this.createFormControl(fieldConfig, value);
-      return controls;
-    }, {});
-
-    this.form = this.fb.group(formControls);
+      acc[fieldConfig.field] = this.createFormControl(fieldConfig, value);
+      return acc;
+    }, {} as Record<string, FormControl>);
+    this.form = this.fb.group(controls);
   }
 
-  // Create a FormControl with validations for each field
-  createFormControl(fieldConfig: FieldConfig, value: any): FormControl {
-    const validators = [];
-    if (fieldConfig.required) {
-      validators.push(Validators.required);
-    }
-
-    // Handle boolean fields specifically
-    if (fieldConfig.type === 'boolean') {
+  // Crée un FormControl avec les validateurs nécessaires
+  createFormControl({ required, type }: FieldConfig, value: any): FormControl {
+    const validators = required ? [Validators.required] : [];
+    if (type === 'boolean') {
       value = value !== undefined ? Boolean(value) : false;
     }
-
     return new FormControl(value, validators);
   }
 
+  // Récupère la valeur imbriquée dans l'objet en fonction du chemin (path)
   getNestedValue(obj: any, path: string): any {
-    return path.split('.').reduce((acc, part) => acc && acc[part], obj);
+    return path.split('.').reduce((o, key) => o?.[key], obj);
   }
 
-  // Show dialog and load data for item
+  // Affiche le dialogue et charge les données de l'item
   showDialog(): void {
-    if (this.itemBase) {
-      this.facadeService.getById$(this.itemBase.id).subscribe({
-        next: (itemComplete: any) => {
-          this.item = itemComplete;
-          console.log(this.item);
-          this.createForm();
-        },
-      });
-      this.visible = true;
-    }
+    if (!this.itemBase) return;
+    this.visible = true;
+    this.facadeService.getById$(this.itemBase.id).subscribe((item: any) => {
+      this.item = item;
+      this.createForm();
+    });
   }
 
-  // Close the dialog
+  // Ferme le dialogue
   closeDialog(): void {
     this.visible = false;
   }
 
+  // Sauvegarde le formulaire après validation et formate les données
   save(): void {
-    if (this.form.valid) {
-      console.log(this.form.value);
-      const formValue = this.form.value;
-      const formattedData: any = {};
+    if (!this.form.valid) return;
+    const formValue = this.form.value;
+    const formattedData: any = this.item?.id ? { id: this.item.id } : {};
 
-      // Inclure l'ID dans les données formatées
-      if (this.item && this.item.id) {
-        formattedData.id = this.item.id;
+    // Traitement des champs principaux
+    this.mainFieldsConfig.forEach(field => {
+      if (formValue[field] !== undefined) {
+        formattedData[field] = formValue[field];
       }
+    });
 
-      // Traiter les champs principaux (fields configurés)
-      this.mainFieldsConfig.forEach((field: string) => {
-        if (formValue[field] !== undefined) {
-          formattedData[field] = formValue[field];
-        }
-      });
+    // Traitement des champs imbriqués
+    this.nestedFieldsConfig.forEach(({ name, prefix, fields }) => {
+      const nestedData = fields.reduce((acc, field) => {
+        const value = formValue[`${prefix}.${field}`] ?? formValue[prefix]?.[field];
+        if (value !== undefined) acc[field] = value;
+        return acc;
+      }, {} as any);
+      if (Object.keys(nestedData).length) {
+        formattedData[name] = nestedData;
+      }
+    });
 
-      // Traiter les champs imbriqués
-      this.nestedFieldsConfig.forEach(nestedField => {
-        const nestedData: any = {};
-
-        // Récupérer les données imbriquées en utilisant le préfixe
-        nestedField.fields.forEach((field: string) => {
-          const nestedValue = formValue[`${nestedField.prefix}.${field}`] || formValue[nestedField.prefix]?.[field];
-          if (nestedValue !== undefined) {
-            nestedData[field] = nestedValue;
-          }
-        });
-
-        // Ajouter les données imbriquées dans le champ principal correspondant
-        if (Object.keys(nestedData).length > 0) {
-          formattedData[nestedField.name] = nestedData;
-        }
-      });
-
-      console.log('Formatted data to send:', formattedData);
-
-      // Envoyer les données au service
-      this.facadeService.update$(formattedData).subscribe({
-        error: (err: any) => {
-          console.error('Error saving data:', err);
-        },
-      });
-
-      this.closeDialog();
-    }
+    this.facadeService.update$(formattedData)({
+      next: () => {
+        this.closeDialog();
+        console.log('Data saved:', formattedData);
+      },
+      error: (err: any) => console.error('Error saving data:', err),
+    });
   }
 }

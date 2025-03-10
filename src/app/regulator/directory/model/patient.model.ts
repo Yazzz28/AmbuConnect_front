@@ -1,4 +1,4 @@
-import { Adress, AdressTableDTO } from '../../../general/type/adress.model';
+import { Adress } from '../../../general/type/adress.model';
 
 export type Patient = {
   id: string;
@@ -9,7 +9,7 @@ export type Patient = {
   hasOxygene: boolean;
   isRegular: boolean;
   note: string;
-  addressString: Adress;
+  address: Adress;
 };
 
 export type PatientTableDTO = {
@@ -18,5 +18,5 @@ export type PatientTableDTO = {
   lastname: string;
   isRegular: boolean;
   phone: string;
-  addressString: AdressTableDTO;
+  addressString: string;
 };

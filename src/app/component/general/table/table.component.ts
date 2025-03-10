@@ -1,13 +1,11 @@
 import { Component, inject, Input, ViewChild } from '@angular/core';
 import { Table, TableModule } from 'primeng/table';
-import { PatientTableDTO } from '../../../regulator/directory/model/patient.model';
 import { InputText } from 'primeng/inputtext';
 import { ActionEditComponent } from '../action-edit/action-edit.component';
 import { ActionDeleteComponent } from '../action-delete/action-delete.component';
 import { Column } from '../../../general/type/column.model';
 import { Dialog } from 'primeng/dialog';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Button } from 'primeng/button';
 
 type FieldConfig = {
   field: string;
@@ -22,7 +20,7 @@ type FieldConfig = {
   standalone: true,
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.scss'],
-  imports: [InputText, TableModule, ActionEditComponent, ActionDeleteComponent, Dialog, ReactiveFormsModule, Button],
+  imports: [InputText, TableModule, ActionEditComponent, ActionDeleteComponent, Dialog, ReactiveFormsModule],
 })
 export class TableComponent {
   @Input() data: any[] = [];
@@ -36,7 +34,7 @@ export class TableComponent {
   @Input() nestedFieldsConfig: any[] = [];
   @Input() form!: FieldConfig[];
 
-  selectedItems: PatientTableDTO[] = [];
+  selectedItems: any[] = [];
 
   visible: boolean = false;
   formGroup!: FormGroup;
@@ -98,11 +96,12 @@ export class TableComponent {
       });
       // Send the formatted data to the service for creation
       this.facadeService.create$(formattedData)({
-        error: (err: any) => {
-          console.error('Error saving new data:', err);
+        next: () => {
+          this.closeDialog(); // Correctly close the dialog
+          console.log('Data saved:', formattedData);
         },
-        succes: () => {
-          this.closeDialog();
+        error: (err: any) => {
+          console.error('Error saving data:', err);
         },
       });
     }
