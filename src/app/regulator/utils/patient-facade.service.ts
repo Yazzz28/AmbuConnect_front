@@ -23,14 +23,24 @@ export class PatientFacadeService {
   create$(patient: Patient): void {
     this._directoryHttpService
       .create$(patient)
-      .pipe(tap(() => this._patientStoreService.create$(patient)))
+      .pipe(
+        tap((createdPatient: Patient) => {
+          const patientTableDTO = this._convertPatientToPatientTableDTO(createdPatient);
+          this._patientStoreService.create$(patientTableDTO);
+        })
+      )
       .subscribe();
   }
 
   update$(patient: Patient): void {
     this._directoryHttpService
       .update$(patient)
-      .pipe(tap(() => this._patientStoreService.update$(patient)))
+      .pipe(
+        tap(() => {
+          const patientTableDTO = this._convertPatientToPatientTableDTO(patient);
+          this._patientStoreService.update$(patientTableDTO);
+        })
+      )
       .subscribe();
   }
 
@@ -39,5 +49,17 @@ export class PatientFacadeService {
       .delete$(patientId)
       .pipe(tap(() => this._patientStoreService.delete$(patientId)))
       .subscribe();
+  }
+
+  // Méthode de conversion de Patient en PatientTableDTO
+  private _convertPatientToPatientTableDTO(patient: Patient): PatientTableDTO {
+    return {
+      id: patient.id,
+      firstname: patient.firstname,
+      lastname: patient.lastname,
+      isRegular: patient.isRegular,
+      phone: patient.phone,
+      addressString: `${patient.address.address} ${patient.address.additionnal} ${patient.address.city} ${patient.address.zipCode}`,
+    };
   }
 }

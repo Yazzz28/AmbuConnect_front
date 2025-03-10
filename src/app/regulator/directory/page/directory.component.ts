@@ -39,7 +39,7 @@ export class DirectoryComponent {
     { field: 'phone', label: 'Téléphone', type: 'tel', required: true },
     { field: 'email', label: 'Email', type: 'email', required: false },
     { field: 'address.address', label: 'Adresse', type: 'text', required: true },
-    { field: 'address.additional', label: 'Complément', type: 'text', required: false },
+    { field: 'address.additionnal', label: 'Complément', type: 'text', required: false },
     { field: 'address.city', label: 'Ville', type: 'text', required: true },
     { field: 'address.zipCode', label: 'Code postal', type: 'text', required: true },
     { field: 'hasOxygen', label: 'Oxygène', type: 'checkbox', required: false },
