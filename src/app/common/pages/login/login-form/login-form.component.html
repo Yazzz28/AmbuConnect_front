@@ -1,0 +1,52 @@
+<div class="flex sm:flex-row gap-x-10 bg-backGround text-text items-center justify-evenly mt-10">
+  <form (ngSubmit)="onSubmit()" [formGroup]="loginForm" class="flex-1 text-text max-w-md py-8">
+    <div class="sm:px-6 px-4">
+      <h2 class="font-semibold text-3xl">Connectez-vous</h2>
+      <div class="mt-14 grid grid-cols-1 gap-x-6 gap-y-6 sm:grid-cols-1 w-full">
+        <app-form-field
+          [control]="loginForm.get('email')"
+          [inputClass]="
+            'block w-full p-3 text-sm leading-5 text-gray-900 bg-white border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-300 outline-none'
+          "
+          [isRequired]="true"
+          [isSubmitted]="isSubmitted"
+          [serverErrors]="serverErrors"
+          label="Identifiant"
+          name="email"
+          placeholder="Email">
+        </app-form-field>
+
+        <app-form-field
+          [control]="loginForm.get('password')"
+          [inputClass]="
+            'block w-full p-3 text-sm leading-5 text-gray-900 bg-white border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-300 outline-none'
+          "
+          [isRequired]="true"
+          [isSubmitted]="isSubmitted"
+          [serverErrors]="serverErrors"
+          label="Mot de passe"
+          name="password"
+          placeholder="Mot de passe"
+          type="password">
+        </app-form-field>
+      </div>
+      <app-dark-blue-button customClass="sm:justify-start" type="submit" name="Connection"></app-dark-blue-button>
+
+      <div class="flex flex-col mt-8 space-y-2">
+        <div>
+          <a class="text-text hover:underline">Mot de passe oublié ?</a>
+        </div>
+        <div>
+          <p class="text-text">
+            Vous n'avez pas de compte ?
+            <a href="/inscription" class="text-textInscription hover:underline cursor-pointer">Inscrivez-vous</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <div class="hidden md:flex flex-1 items-center justify-center max-w-2xl">
+    <img src="/img/connexion.png" alt="Accueil d'AmbuConnect" class="first-image rounded-lg w-full max-w-2xl" />
+  </div>
+</div>

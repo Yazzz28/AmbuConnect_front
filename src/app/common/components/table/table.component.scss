@@ -1,0 +1,29 @@
+.multi-selector {
+  margin-top: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.multi-option {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.multi-option input[type='checkbox'] {
+  margin-right: 0.5rem;
+}
+
+@media (max-width: 768px) {
+  .col-2-hide {
+    display: none !important;
+  }
+}
+
+@media (max-width: 425px) {
+  .col-1-hide {
+    display: none !important;
+  }
+}

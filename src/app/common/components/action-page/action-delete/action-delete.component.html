@@ -1,0 +1,21 @@
+<p-button (click)="showDialog()" class="button-delete" icon="pi pi-trash" severity="danger" />
+<p-dialog
+  [(visible)]="visible"
+  [modal]="true"
+  [dismissableMask]="true"
+  maskStyleClass="backdrop-blur-sm"
+  styleClass="!border-0 !bg-backGround responsive-dialog">
+  <ng-template #header>
+    <h2 class="text-text font-medium text-xl">
+      {{ item | displayFields: firstTitle : secondTitle : separator }}
+    </h2>
+  </ng-template>
+  <ng-template #content>
+    <div class="px-6 py-6">
+      <h3 class="text-text text-lg">Êtes-vous sûr de vouloir supprimer ?</h3>
+    </div>
+    <div class="flex gap-12 justify-center mb-6 mx-6">
+      <app-red-button (click)="confirmDelete()" customClass="sm:justify-start px-4" type="submit" name="Valider"></app-red-button>
+    </div>
+  </ng-template>
+</p-dialog>

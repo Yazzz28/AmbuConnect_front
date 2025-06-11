@@ -1,0 +1,14 @@
+.blue-button {
+  background-color: var(--sky-blue-button);
+  transition: background-color 0.3s ease-in-out;
+  color: #009dff;
+  align-items: center;
+  border-radius: 5px;
+  border: 1px solid;
+  border-color: #009dff;
+}
+
+.blue-button:hover {
+  background-color: #5fb8f8;
+  color: white;
+}

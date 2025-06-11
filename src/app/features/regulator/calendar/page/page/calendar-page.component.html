@@ -1,0 +1,5 @@
+<div class="h-auto flex-col">
+  <full-calendar [events]="events$ | async" [options]="calendarOptions"></full-calendar>
+</div>
+
+<app-new-calendar (save)="handleSave($event)" [(visible)]="visible" [eventToEdit]="selectedEvent"> </app-new-calendar>

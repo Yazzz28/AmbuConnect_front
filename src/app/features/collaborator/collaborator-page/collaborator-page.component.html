@@ -1,0 +1,13 @@
+@if (data$ | async; as data) {
+  <app-table
+    [columns]="columns"
+    [data]="data"
+    [form]="form"
+    [globalFilterFields]="globalFilterFields"
+    [fieldToShow]="fieldToShow"
+    [facadeService]="usersFacadeService"
+    [fieldToShowTwo]="fieldToShowTwo"
+    [mainFieldsConfig]="mainFieldsConfig"
+    [complexColumns]="complexColumns">
+  </app-table>
+}

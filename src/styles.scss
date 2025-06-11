@@ -3,148 +3,131 @@
 @layer tailwind-base {
   @tailwind base;
 }
+
 @import 'primeicons/primeicons.css';
 @layer tailwind-utilities {
   @tailwind components;
   @tailwind utilities;
 }
 
-$bg-opacity-border: rgba(8, 125, 234, 0.25); // background couleur #087DEA avec 25% d'opacité
-$border-color: #009dff; // couleur de la bordure #009DFF
-$bg-color: #087dea; // couleur de fond #087DEA
-// Variables SCSS
-$bg-opacity-border-red: rgba(234, 8, 8, 0.25); // Couleur #EA0808 avec 25% d'opacité
-$border-color-red: #ff1e00; // Bordure couleur #FF1E00
-// Variable pour le fond sans opacité
-$bg-color-red: #ff0000; // Couleur de fond #FF0000
+$bg-opacity-border: rgba(8, 125, 234, 0.25);
+$border-color: #009dff;
+$bg-color: #087dea;
+$bg-opacity-border-red: rgba(234, 8, 8, 0.25);
+$border-color-red: #ff1e00;
+$bg-color-red: #ff0000;
 
-/* Variables de couleurs */
 :root {
   font-family: 'Noto Sans Georgian', sans-serif;
   padding: 0;
   margin: 0;
-  --color-background: #ffffff; /* Blanc */
-  --color-text: #000000; /* Gris foncé */
+  --color-background: #ffffff;
+  --color-background-input: #fdfdfd;
+  --color-border-input: #dddddd;
+  --color-text: #000000;
+  --color-text-multiselect: #000000;
+  --color-text-input: #2e2e2e;
   --color-main-button: #0659a7;
   --color-background-polygon: #eaf5fb;
   --color-text-title: #0659a7;
-  --color-handle: #ffffff; /* Couleur du slider */
-  --color-checked-background: #0659a7; /* Fond activé */
-  --color-hover-background: #5c87c1; /* Fond au survol */
-  --color-disabled-background: #ddd; /* Fond désactivé */
-  --color-disabled-handle: #aaa; /* Couleur du slider désactivé */
-  --color-footer: #e8eff7; /* Couleur du footer */
-  --color-footer-text: #4a86bf; /* Couleur du texte du footer */
-  --color-icone-footer: #0659a7; /* Couleur des icônes du footer */
-  --header-modal: #a7c9e8;
-  --bg-cancel-button-modal: #087dea; /* Use the actual color value */
+  --color-text-popup: rgba(74, 134, 191, 0.78);
+  --color-text-inscription: #0b6dc6;
+  --color-handle: #ffffff;
+  --color-checked-background: #0659a7;
+  --color-hover-background: #5c87c1;
+  --color-disabled-background: #ddd;
+  --color-disabled-handle: #aaa;
+  --color-footer: #e8eff7;
+  --color-footer-text: #4a86bf;
+  --color-icone-footer: #0659a7;
+  --header-modal: rgba(167, 201, 232, 0.25);
+  --bg-cancel-button-modal: #087dea;
   --border-cancel-button-modal: #009dff;
   --bg-delete-button-modal: rgba(234, 8, 8, 0.25);
   --border-delete-button-modal: #ff1e00;
-  --color-text-invalidated-form: #dc0024; /* Message d'erreur formulaire /,   --color-text-invalidated-form: #ff6b6b; / Message d'erreur formulaire */
+  --color-text-invalidated-form: #dc0024;
+  --color-text-delete-button: #dc0024;
+  --sky-blue-button: #badeff;
+  --cross-cancel: rgb(245, 255, 255);
+  --red-button: rgba(234, 8, 8, 0.25);
+  --color-navbar-text: #0659a7;
+  --color-label-text: #054d93;
+  --color-navbar-text-connexion: #ffffff;
+  --color-navbar: #ffffff;
+  --color-main-button-rgb: rgba(6, 89, 167);
+  --bg-opacity-border-red: rgba(234, 8, 8, 0.25);
+  --border-color-red: #ff1e00;
+  --bg-color-red: #ff0000;
 }
 
 .dark {
-  --color-background: #0a1a2f; /* Bleu nuit */
+  --color-background: #0a1a2f;
+  --color-background-input: #fdfdfd;
+  --color-border-input: #f1f5f9;
   --color-text: #d0efff;
+  --color-text-input: #2e2e2eff;
   --color-main-button: #0659a7;
   --color-background-polygon: #0f2541;
   --color-text-title: #d0efff;
-  --color-handle: #ffffff; /* Couleur du slider */
-  --color-checked-background: #0659a7; /* Fond activé */
-  --color-hover-background: #4c78a7; /* Fond au survol */
-  --color-disabled-background: #444; /* Fond désactivé */
-  --color-disabled-handle: #aaa; /* Couleur du slider désactivé */
-  --color-footer: #31495e; /* Couleur du footer */
-  --color-footer-text: #4a86bf; /* Couleur du texte du footer */
+  --color-handle: #ffffff;
+  --color-text-multiselect: #ffffff;
+  --color-text-popup: #d0efff;
+  --color-text-inscription: #0e8bfb;
+  --color-checked-background: #0659a7;
+  --color-hover-background: #4c78a7;
+  --color-disabled-background: #444;
+  --color-disabled-handle: #aaa;
+  --color-footer: #31495e;
+  --color-footer-text: #4a86bf;
   --color-icone-footer: #e8eff7;
   --header-modal: #0f2541;
   --bg-cancel-button-modal: #087dea;
+  --sky-blue-button: #badeff;
+  --cross-cancel: #1c4071;
   --bg-delete-button-modal: #ff0000;
+  --color-text-delete-button: #ffffff;
+  --red-button: rgba(234, 8, 8, 0.4);
+  --color-navbar-text: #ffffff;
+  --color-label-text: #badeff;
+  --color-navbar-text-connexion: #0659a7;
+  --color-navbar: #777474;
+  --color-main-button-rgb: rgba(6, 89, 167);
+  --bg-opacity-border-red: rgba(234, 8, 8, 0.4);
+  --border-color-red: #ff4444;
+  --bg-color-red: #cc0000;
 }
 
-/* Boutons "Annuler" et "Supprimer" */
 .button-cancel-delete {
-  background-color: var(--bg-cancel-button-modal); /* Fond du bouton "Annuler" */
-  border: 2px solid var(--border-cancel-button-modal); /* Bordure du bouton "Annuler" */
-  color: var(--color-text); /* Couleur du texte */
-  opacity: 0.85; /* Ajout d'une légère transparence */
+  background-color: var(--bg-cancel-button-modal);
+  border: 2px solid var(--border-cancel-button-modal);
+  color: var(--color-text);
+  opacity: 0.85;
   transition:
     opacity 0.3s ease,
-    background-color 0.3s ease; /* Transition fluide */
+    background-color 0.3s ease;
 }
 
 .button-cancel-delete:hover {
-  opacity: 1; /* Augmentation de l'opacité au survol */
-  background-color: var(--color-hover-background); /* Couleur du fond au survol */
+  opacity: 1;
+  background-color: var(--color-hover-background);
 }
 
 .button-confirm-delete {
-  background-color: var(--bg-delete-button-modal); /* Fond du bouton "Supprimer" */
-  border: 2px solid var(--border-delete-button-modal); /* Bordure du bouton "Supprimer" */
-  color: var(--color-text); /* Couleur du texte */
-  opacity: 0.85; /* Ajout d'une légère transparence */
+  background-color: var(--bg-delete-button-modal);
+  border: 2px solid var(--border-delete-button-modal);
+  color: var(--color-text);
+  opacity: 0.85;
   transition:
     opacity 0.3s ease,
-    background-color 0.3s ease; /* Transition fluide */
+    background-color 0.3s ease;
 }
 
 .button-confirm-delete:hover {
-  opacity: 1; /* Augmentation de l'opacité au survol */
-  background-color: var(--color-hover-background); /* Couleur du fond au survol */
+  opacity: 1;
+  background-color: var(--color-hover-background);
+  --color-text-invalidated-form: #ff6b6b;
 }
 
-// Nav
-.p-menubar {
-  background-color: var(--color-background);
-  color: var(--color-text);
-  text-decoration-color: var(--color-text);
-}
-
-.p-menubar-root-list {
-  border-bottom: 1px solid var(--color-text);
-  gap: 2px;
-  width: auto;
-}
-
-.p-menubar-item-link {
-  border-bottom: var(--color-main-button) 1px solid;
-}
-
-.p-menubar-item-link:hover .p-menubar-item-content:hover {
-  background-color: var(--color-main-button);
-}
-
-/* max with 960px */
-@media (max-width: 960px) {
-  .p-toggleswitch .p-component {
-    background-color: var(--color-background); /* Fond du ToggleSwitch */
-  }
-
-  /* Positionner le bouton de la navbar (icône d'ouverture) en haut à droite */
-  .p-menubar-button {
-    position: fixed;
-    top: 10px;
-    right: 10px;
-    z-index: 1000;
-  }
-
-  .p-menubar-root-list {
-    position: fixed; /* Positionner de manière fixe */
-    top: 0; /* Commencer en haut de la fenêtre */
-    right: 0; /* Aligner à droite de la fenêtre */
-    height: 100vh; /* Prendre toute la hauteur de la fenêtre */
-    width: 80%; /* La largeur s'ajuste à 80% de la fenêtre, laissant 20% à droite */
-    background-color: var(--color-background); /* Couleur de fond (à ajuster) */
-    box-shadow: -2px 0px 10px rgba(0, 0, 0, 0.1); /* Ombre légère pour l'effet de séparation */
-  }
-
-  .p-menubar-button:hover {
-    background-color: var(--color-main-button);
-  }
-}
-
-/* dark mode acceuil */
 .clip-path-custom {
   background-color: var(--color-background-polygon) !important;
 }
@@ -153,39 +136,25 @@ h2 {
   color: var(--color-text-title);
 }
 
-.p-toggleswitch.p-component {
-  background-color: var(--color-background); /* Fond du ToggleSwitch */
-}
-
-.p-toggleswitch.p-toggleswitch-checked {
-  background-color: var(--color-background); /* Fond activé */
-}
-
-.p-toggleswitch.p-toggleswitch-checked .p-toggleswitch-slider {
-  background-color: var(--color-main-button); /* Couleur du slider */
-}
-
 .table-content {
-  max-width: 90%; /* Limite la largeur de la table à 90% de son conteneur parent */
-  margin: 0 auto; /* Centre la table horizontalement */
-  padding: 1rem; /* Ajoute un peu de padding autour du conteneur */
+  max-width: 90%;
+  margin: 0 auto;
+  padding: 1rem;
 }
 
-/* Optionnel : Si vous voulez ajuster la taille de la table elle-même */
 p-table {
-  font-size: 0.875rem; /* Réduit la taille de la police pour une table plus compacte */
-  width: 100%; /* Assure que la table occupe toute la largeur du conteneur */
+  font-size: 0.875rem;
+  width: 100%;
 }
 
-/* Réduit la taille des colonnes */
 p-table th,
 p-table td {
-  padding: 0.5rem; /* Réduit le padding des cellules */
-  text-align: left; /* Aligne le texte à gauche */
+  padding: 0.5rem;
+  text-align: left;
 }
 
 p-table .p-checkbox input {
-  width: 1rem; /* Réduit la taille des cases à cocher */
+  width: 1rem;
   height: 1rem;
 }
 
@@ -211,39 +180,33 @@ p-table .p-checkbox input {
     background-color 0.3s ease;
 }
 
-/* Cibler le p-button enfant de .button-delete */
 .button-delete .p-button {
   color: rgb(255, 0, 56);
-  background: rgba(185, 106, 124, 0.8); /* Rouge vif similaire à bg-red-600 avec transparence */
+  background: rgba(185, 106, 124, 0.8);
   border: rgba(225, 29, 72, 1) 2px solid;
 }
 
 .button-delete .p-button:hover {
-  background: rgba(190, 18, 60, 0.9); /* Couleur de fond légèrement plus foncée au survol avec un peu plus de transparence */
+  background: rgba(190, 18, 60, 0.9);
 }
 
-/* Cibler le p-button enfant de .button-edit */
 .button-edit .p-button {
   color: rgb(0, 206, 138);
-  background: rgba(112, 185, 161, 0.8); /* Vert similaire à bg-green-500 (PrimeNG 'success') avec transparence */
+  background: rgba(112, 185, 161, 0.8);
   border: rgba(16, 185, 129) 2px solid;
 }
 
 .button-edit .p-button:hover {
-  background: rgba(5, 150, 105, 0.9); /* Couleur de fond légèrement plus foncée au survol avec un peu plus de transparence */
+  background: rgba(5, 150, 105, 0.9);
 }
 
-/* Cibler l'icône dans les boutons pour .button-edit et .button-delete */
 .button .p-button-icon {
-  font-size: 1.2rem; /* Taille de l'icône légèrement plus petite */
+  font-size: 1.2rem;
 }
 
-/* Enlever le padding dans p-button */
 .button .p-button {
-  padding: 0; /* Enlève le padding par défaut pour ne pas affecter la taille du bouton */
+  padding: 0;
 }
-
-//Footer
 
 .p-footer {
   background-color: var(--color-footer);
@@ -251,11 +214,11 @@ p-table .p-checkbox input {
 }
 
 .text-icons {
-  color: var(--color-icone-footer); /* Couleur pour les icônes en mode clair */
+  color: var(--color-icone-footer);
 }
 
 .dark .text-icons {
-  color: var(--color-footer-text); /* Couleur des icônes en mode sombre */
+  color: var(--color-footer-text);
 }
 
 .required:after {
@@ -263,7 +226,6 @@ p-table .p-checkbox input {
   color: var(--color-text-invalidated-form);
 }
 
-/* Main container */
 .form-container {
   width: 100%;
   max-width: 90vw;
@@ -283,7 +245,6 @@ p-table .p-checkbox input {
   font-size: 1.5rem;
 }
 
-/* Form structure */
 .dynamic-form {
   width: 100%;
 }
@@ -314,7 +275,6 @@ p-table .p-checkbox input {
   margin-left: 0.25rem;
 }
 
-/* Input fields general styling */
 .dynamic-form .field-container .input-field,
 .dynamic-form .field-container .file-input,
 .dynamic-form .field-container .multiple-file-input,
@@ -337,7 +297,6 @@ p-table .p-checkbox input {
   outline: none;
 }
 
-/* Checkbox and radio groups */
 .dynamic-form .checkbox-group,
 .dynamic-form .radio-group {
   display: flex;
@@ -357,7 +316,6 @@ p-table .p-checkbox input {
   width: auto;
 }
 
-/* Button container */
 .button-container {
   position: sticky;
   bottom: 0;
@@ -380,7 +338,6 @@ p-table .p-checkbox input {
   transition: background-color 0.3s ease;
 }
 
-/* Responsive adjustments */
 @media (max-width: 768px) {
   .form-container {
     padding: 1rem;
@@ -414,4 +371,87 @@ p-table .p-checkbox input {
   .form-field-wrapper:has(.radio-group) {
     grid-column: span 2;
   }
+}
+
+.required:after {
+  content: ' *';
+  color: var(--color-text-invalidated-form);
+}
+
+.fc-header-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem;
+  gap: 0.5rem;
+  font-size: 14px;
+
+  .fc-toolbar-chunk {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .fc-toolbar-chunk:last-child {
+    display: none;
+  }
+
+  .fc-header-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+    padding: 1rem;
+
+    .fc-toolbar-chunk {
+      flex-direction: column;
+    }
+
+    .fc-button-group {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-evenly;
+      gap: 0.8rem;
+
+      button {
+        flex: 1;
+        padding: 0.5rem 1rem;
+        font-size: 12px;
+      }
+    }
+
+    .fc-toolbar-title {
+      text-align: center;
+      font-size: 16px;
+      font-weight: bold;
+    }
+  }
+}
+
+.fc-col-header-cell-cushion,
+.fc-daygrid-day-number,
+.fc-list-day-cushion,
+.fc-timegrid-slot-label-cushion {
+  color: var(--color-text);
+}
+
+.fc-theme-standard .fc-list-day-cushion {
+  background-color: var(--color-background);
+}
+
+.fc-event {
+  background-color: var(--color-background);
+  color: var(--color-text);
+}
+
+.fc-event:hover {
+  background-color: var(--color-text);
+  color: var(--header-modal);
+}
+
+.pi-eye,
+.pi-eye-slash {
+  color: black !important;
 }

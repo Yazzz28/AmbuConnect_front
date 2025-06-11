@@ -1,0 +1,10 @@
+<div class="sm:col-span-3 mt-4 flex items-end" [ngClass]="customClass">
+  <button
+    [type]="routerLink ? 'button' : type"
+    [id]="name"
+    [name]="name"
+    class="blue-button w-full sm:w-auto px-6 sm:px-32 py-3 text-center mt-4"
+    (click)="onClick()">
+    {{ name }}
+  </button>
+</div>

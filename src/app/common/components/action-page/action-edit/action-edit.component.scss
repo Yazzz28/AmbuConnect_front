@@ -1,0 +1,258 @@
+$border-color: #ddd;
+$shadow-color: rgba(0, 0, 0, 0.15);
+$dark-bg-color: rgba(10, 26, 47, 0.75);
+$dark-shadow-color: rgba(103, 103, 103, 0.4);
+$dark-highlight-color: rgba(255, 255, 255, 0.05);
+$blur-amount: 40px;
+$border-radius-sm: 3px;
+$border-radius-lg: 12px;
+
+.dialog-header-shadow {
+  transition:
+    box-shadow 0.3s ease,
+    backdrop-filter 0.3s ease;
+  backdrop-filter: blur($blur-amount);
+  -webkit-backdrop-filter: blur($blur-amount);
+  box-shadow: 0 4px 12px $shadow-color;
+
+  &.dark,
+  :host-context(.dark) &,
+  html.dark & {
+    background-color: $dark-bg-color;
+    box-shadow:
+      0 6px 24px $dark-shadow-color,
+      0 2px 6px $dark-highlight-color;
+  }
+}
+
+.color-field-container {
+  margin-bottom: 0.75rem;
+
+  .iro-color-picker {
+    margin-top: 0.25rem;
+    height: auto;
+    min-height: 150px;
+    max-width: 150px;
+    margin-left: auto;
+    margin-right: auto;
+    border: transparent;
+  }
+
+  .color-preview {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 4px;
+
+    .color-box {
+      width: 18px;
+      height: 18px;
+      border-radius: $border-radius-sm;
+      border: 1px solid $border-color;
+    }
+
+    .color-hex {
+      font-family: monospace;
+      font-size: 12px;
+      color: var(--text-color, #333);
+      background-color: rgba(245, 245, 245, 0.7);
+      padding: 1px 4px;
+      border-radius: $border-radius-sm;
+      border: 1px solid #eee;
+    }
+  }
+}
+
+.color-box-large {
+  width: 30px !important;
+  height: 30px !important;
+  border-radius: 2px !important;
+}
+
+.color-hex-large {
+  font-size: 16px !important;
+  font-weight: 500 !important;
+  background-color: transparent !important;
+  border: none !important;
+}
+
+::ng-deep .responsive-dialog {
+  border-radius: $border-radius-lg;
+  overflow: hidden;
+}
+
+::ng-deep .p-dialog-content {
+  max-height: 70vh !important;
+  overflow-y: auto !important;
+}
+
+::ng-deep .dialog-header-shadow {
+  transition:
+    box-shadow 0.3s ease,
+    backdrop-filter 0.3s ease;
+  backdrop-filter: blur($blur-amount);
+  -webkit-backdrop-filter: blur($blur-amount);
+  box-shadow: 0 4px 12px $shadow-color;
+}
+
+@media (max-width: 425px) {
+  .button-container {
+    width: 100%;
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
+
+:host ::ng-deep .p-dialog .p-dialog-header {
+  @apply w-full bg-header rounded-t-lg;
+  padding: 15px;
+  min-height: 80px;
+  transition:
+    box-shadow 0.3s ease,
+    backdrop-filter 0.3s ease;
+  backdrop-filter: blur(40px);
+  -webkit-backdrop-filter: blur(40px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.button-view {
+  &:hover {
+    transform: scale(1.05);
+    transition: transform 0.2s ease;
+  }
+}
+
+:host ::ng-deep .p-disabled,
+:host ::ng-deep .p-component:disabled {
+  opacity: 1 !important;
+  background-color: transparent !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+  cursor: default;
+  color: var(--text-color, #333) !important;
+}
+
+:host ::ng-deep .readonly-mode {
+  input[type='text']:disabled,
+  input[type='email']:disabled,
+  input[type='number']:disabled,
+  input[type='tel']:disabled,
+  input[type='date']:disabled,
+  textarea:disabled {
+    padding-left: 0 !important;
+    border: none !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+  }
+
+  input[type='checkbox']:disabled,
+  input[type='radio']:disabled {
+    pointer-events: none;
+    opacity: 0.8 !important;
+  }
+
+  .color-field-container {
+    .color-preview {
+      margin-left: 0;
+
+      .color-box {
+        width: 24px;
+        height: 24px;
+      }
+
+      .color-hex {
+        font-size: 14px;
+        background-color: transparent;
+        border: none;
+      }
+    }
+  }
+
+  .readonly-value {
+    padding: 4px 0;
+    font-weight: 500;
+    color: var(--text-color, #333);
+  }
+}
+
+:host ::ng-deep .readonly-mode .iro-color-picker {
+  display: none !important;
+}
+
+.read-only:disabled {
+  border: none !important;
+  background-color: transparent !important;
+}
+
+:host ::ng-deep .p-checkbox {
+  display: none !important;
+}
+
+:host ::ng-deep .p-multiselect-filter-container {
+  display: none !important;
+}
+
+:host ::ng-deep .readonly-mode {
+  input[type='text']:disabled,
+  input[type='email']:disabled,
+  input[type='number']:disabled,
+  input[type='tel']:disabled,
+  input[type='date']:disabled,
+  textarea:disabled,
+  .p-multiselect.p-disabled {
+    color: #000000 !important;
+
+    .dark & {
+      color: #ffffff !important;
+    }
+  }
+
+  .p-multiselect.p-disabled .p-multiselect-label {
+    color: #000000 !important;
+
+    .dark & {
+      color: #ffffff !important;
+    }
+  }
+}
+
+:host ::ng-deep .dynamic-form:not(.readonly-mode) {
+  input,
+  textarea,
+  .p-multiselect {
+    color: #000000 !important;
+  }
+
+  .multiselect-readonly {
+    background-color: var(--bg-backGroundInput);
+    border: 1px solid var(--border-borderInput);
+    border-radius: 0.375rem;
+    padding: 0.25rem 0.5rem;
+    min-height: 2rem;
+    color: var(--text-textInput);
+    display: flex;
+    align-items: center;
+
+    .text-gray-400 {
+      color: #9ca3af;
+      font-style: italic;
+
+      .dark & {
+        color: #6b7280;
+      }
+    }
+  }
+}
+
+.readonly-mode .readonly-input,
+.readonly-mode .readonly-value,
+.readonly-mode input[readonly],
+.readonly-mode textarea[readonly],
+.readonly-mode .color-hex,
+.readonly-mode .text-textMultiselect {
+  @apply text-sm;
+}
+
+.readonly-mode .color-info .color-hex {
+  @apply text-sm;
+}

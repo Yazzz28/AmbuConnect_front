@@ -1,0 +1,37 @@
+.dialog-header-shadow {
+  transition:
+    box-shadow 0.3s ease,
+    backdrop-filter 0.3s ease;
+  backdrop-filter: blur(40px);
+  -webkit-backdrop-filter: blur(40px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+
+  &.dark,
+  :host-context(.dark) &,
+  html.dark & {
+    background-color: rgba(10, 26, 47, 0.75);
+    box-shadow:
+      0 6px 24px rgba(103, 103, 103, 0.4),
+      0 2px 6px rgba(255, 255, 255, 0.05);
+  }
+}
+
+::ng-deep .responsive-dialog {
+  max-width: 95vw !important;
+  width: 600px;
+  margin: 0 auto;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+:host ::ng-deep .p-dialog .p-dialog-header {
+  @apply w-full bg-header rounded-t-lg;
+  padding: 15px;
+  min-height: 80px;
+  transition:
+    box-shadow 0.3s ease,
+    backdrop-filter 0.3s ease;
+  backdrop-filter: blur(40px);
+  -webkit-backdrop-filter: blur(40px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}

@@ -1,9 +1,18 @@
 <div class="bg-backGround min-h-screen flex flex-col">
-  <!-- Navbar toujours en haut -->
-  <app-nav-bar></app-nav-bar>
-  <!-- Contenu principal en dessous -->
-  <div class="flex-grow p-6">
+  @if (showNavbar) {
+    <header class="fixed top-0 left-0 right-0 z-50">
+      <app-nav-bar></app-nav-bar>
+    </header>
+  }
+  <p-toast [hideTransitionOptions]="'1000ms'" [showTransformOptions]="'translateY(100%)'" [showTransitionOptions]="'1000ms'" />
+
+  <main class="pt-[70px] pb-10 flex-grow">
     <router-outlet></router-outlet>
-  </div>
-  <app-footer></app-footer>
+  </main>
+
+  @if (showNavbar) {
+    <footer>
+      <app-footer></app-footer>
+    </footer>
+  }
 </div>

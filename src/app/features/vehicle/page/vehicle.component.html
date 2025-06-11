@@ -1,0 +1,12 @@
+@if (data$ | async; as data) {
+  <app-table
+    [columns]="columns"
+    [data]="data"
+    [form]="form"
+    [globalFilterFields]="globalFilterFields"
+    [fieldToShow]="fieldToShow"
+    [fieldToShowTwo]="fieldToShowTwo"
+    [facadeService]="vehiclesFacadeService"
+    [mainFieldsConfig]="mainFieldsConfig">
+  </app-table>
+}

@@ -1,0 +1,226 @@
+<div class="transporter-page">
+  <div class="page-header mb-4">
+    <div class="row align-items-center">
+      <div class="col">
+        <h1 class="page-title">Transports du jour</h1>
+        <p class="text-muted">{{ (transportStats$ | async)?.total || 0 }} transport(s) planifié(s)</p>
+      </div>
+      <div class="col-auto">
+        <button type="button" class="btn btn-primary" (click)="refreshTransports()">
+          <i class="pi pi-sync" [class.fa-spin]="loading$ | async"></i>
+          Actualiser
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="filters mb-4">
+    <div class="row">
+      <div class="col-md-8">
+        <div class="d-flex align-items-center flex-wrap gap-2">
+          <span class="fw-semibold me-3">Filtrer par véhicule :</span>
+
+          <button
+            type="button"
+            [class]="currentFilter === 'all btn btn-sm' ? 'btn-primary btn btn-sm' : 'btn-outline-primary btn btn-sm'"
+            (click)="setFilter('all')">
+            <i class="pi pi-list"></i>
+            Tous les véhicules
+          </button>
+
+          @if (availableVehicles$ | async; as vehicles) {
+            @for (vehicle of vehicles; track vehicle.id) {
+              <button
+                type="button"
+                [class]="isVehicleSelected(vehicle.id) ? 'btn-success btn btn-sm' : 'btn-outline-success btn btn-sm'"
+                (click)="setFilter(vehicle.id.toString())">
+                <i class="pi pi-car"></i>
+                {{ formatVehicleName(vehicle) }}
+                <span class="badge bg-light text-dark ms-1">
+                  {{ getTransportCountForVehicle(vehicle.id) | async }}
+                </span>
+              </button>
+            } @empty {
+              <small class="text-muted">Aucun véhicule disponible</small>
+            }
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+
+  @if (loading$ | async) {
+    <div class="text-center my-5">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Chargement...</span>
+      </div>
+      <p class="mt-2">Chargement des transports...</p>
+    </div>
+  }
+
+  @if (error$ | async; as error) {
+    <div class="alert alert-danger alert-dismissible">
+      <i class="pi pi-exclamation-triangle"></i>
+      {{ error }}
+      <button type="button" class="btn-close" (click)="clearError()">Effacer les erreurs</button>
+    </div>
+  }
+
+  @if ((loading$ | async) === false) {
+    <div class="transports-grid">
+      <div class="row">
+        @for (transport of filteredTransports$ | async; track transport.id) {
+          <div class="col-lg-6 col-xl-4 mb-4">
+            <div
+              class="transport-card"
+              [class.emergency]="transport.isEmergency"
+              (click)="selectTransport(transport)"
+              (keydown.enter)="selectTransport(transport)"
+              (keydown.space)="selectTransport(transport)"
+              tabindex="0"
+              role="button"
+              [attr.aria-label]="'Sélectionner le transport de ' + getFormattedStartTime(transport) + ' à ' + getFormattedEndTime(transport)">
+              <div class="card-header">
+                <div class="row align-items-center">
+                  <div class="col">
+                    <div [class]="getTypeBadgeClass(transport.type)">
+                      {{ transport.type }}
+                    </div>
+                  </div>
+                  <div class="col-auto">
+                    @if (transport.isEmergency) {
+                      <div class="emergency-indicator">
+                        <i class="pi pi-exclamation-triangle text-danger"></i>
+                        <small class="text-danger fw-bold">URGENCE</small>
+                      </div>
+                    }
+                  </div>
+                </div>
+              </div>
+
+              <div class="card-body">
+                <div class="transport-route mb-3">
+                  <div class="route-point">
+                    <div class="route-icon start">
+                      <i class="pi pi-info-circle"></i>
+                    </div>
+                    <div class="route-details">
+                      <div class="time">{{ getFormattedStartTime(transport) }}</div>
+                      <div class="place">{{ transport.startPlace }}</div>
+                    </div>
+                  </div>
+
+                  <div class="route-line">
+                    <div class="line"></div>
+                    <div class="duration">
+                      {{ getCalculatedDuration(transport) }}
+                    </div>
+                  </div>
+
+                  <div class="route-point">
+                    <div class="route-icon end">
+                      <i class="pi pi-map-marker"></i>
+                    </div>
+                    <div class="route-details">
+                      <div class="time">{{ getFormattedEndTime(transport) }}</div>
+                      <div class="place">{{ transport.endPlace }}</div>
+                    </div>
+                  </div>
+                </div>
+
+                @if (transport.vehicle) {
+                  <div class="vehicle-info mb-3">
+                    <i class="pi pi-car"></i>
+                    <span class="license-plate ms-2">{{ transport.vehicle.registration }}</span>
+                  </div>
+                }
+
+                @if (transport.patients.length) {
+                  <div class="patients-info mb-3">
+                    <div class="patients-header">
+                      <i class="pi pi-user"></i>
+                      <strong>{{ transport.patients.length }} patient(s)</strong>
+                    </div>
+                    <div class="patients-list">
+                      @for (patient of transport.patients; track patient.id) {
+                        <span class="patient-tag">
+                          {{ patient.firstname }} {{ patient.lastname }}
+                          @if (patient.hasOxygen) {
+                            <i class="pi pi-heart-fill text-danger ms-1" title="Oxygène requis"></i>
+                          }
+                        </span>
+                      }
+                    </div>
+                  </div>
+                }
+
+                @if (transport.contactName) {
+                  <div class="contact-info">
+                    <i class="pi pi-user"></i>
+                    Contact :
+                    <strong>{{ transport.contactName }}</strong>
+                    @if (transport.contactPhone) {
+                      <span class="contact-phone ms-2">
+                        <i class="pi pi-phone"></i>
+                        {{ transport.contactPhone }}
+                      </span>
+                    }
+                  </div>
+                }
+
+                @if (transport.isEmergency && transport.emergencyCode) {
+                  <div class="emergency-code mt-2">
+                    <span class="badge bg-danger">
+                      <i class="pi pi-key"></i>
+                      {{ transport.emergencyCode }}
+                    </span>
+                  </div>
+                }
+
+                @if (transport.note) {
+                  <div class="transport-note mt-3">
+                    <small class="text-muted">
+                      <i class="pi pi-pencil"></i>
+                      {{ transport.note }}
+                    </small>
+                  </div>
+                }
+              </div>
+
+              <div class="card-footer">
+                <div class="row">
+                  <div class="col">
+                    <button type="button" class="btn btn-outline-primary btn-sm" (click)="setStart(transport, $event)">
+                      <i class="pi pi-flag"></i>
+                      Départ
+                    </button>
+                  </div>
+                  <div class="col-auto">
+                    <button type="button" class="btn btn-outline-secondary btn-sm" (click)="setEnd(transport, $event)">
+                      <i class="pi pi-flag-fill"></i>
+                      Arrivée
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        } @empty {
+          <div class="no-transports text-center py-5">
+            <i class="pi pi-truck text-muted mb-3"></i>
+            <h4 class="text-muted">Aucun transport trouvé</h4>
+            <p class="text-muted">
+              @if (currentFilter === 'all') {
+                Il n'y a aucun transport planifié pour aujourd'hui.
+              } @else if (currentFilter === 'emergency') {
+                Aucune urgence n'est planifiée.
+              } @else if (currentFilter === 'regular') {
+                Aucun transport régulier n'est planifié.
+              }
+            </p>
+          </div>
+        }
+      </div>
+    </div>
+  }
+</div>

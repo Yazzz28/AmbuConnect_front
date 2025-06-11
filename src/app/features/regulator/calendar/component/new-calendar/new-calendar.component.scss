@@ -1,0 +1,284 @@
+$bg-opacity-border: rgba(8, 125, 234, 0.25);
+$border-color: #009dff;
+$bg-color: #087dea;
+$bg-opacity-border-red: rgba(234, 8, 8, 0.25);
+$border-color-red: #ff1e00;
+$bg-color-red: #ff0000;
+
+.p-autocomplete {
+  width: 100%;
+  font-family: 'Noto Sans Georgian', sans-serif;
+}
+
+.p-autocomplete .p-autocomplete-input {
+  background-color: var(--color-background-input);
+  color: var(--color-text-input);
+  border: 1px solid var(--color-border-input);
+  padding: 0.75rem 1rem;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+.p-autocomplete .p-autocomplete-input:focus {
+  outline: none;
+  border-color: var(--color-main-button);
+  box-shadow: 0 0 0 2px $bg-opacity-border;
+}
+
+.p-autocomplete .p-autocomplete-dropdown {
+  background-color: var(--color-main-button);
+  color: white;
+  border: none;
+  border-radius: 0 4px 4px 0;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.p-autocomplete .p-autocomplete-dropdown:hover {
+  background-color: var(--color-hover-background);
+}
+
+.p-autocomplete .p-autocomplete-dropdown .p-icon {
+  color: var(--color-main-button);
+}
+
+.p-autocomplete-panel {
+  background-color: var(--color-background);
+  border: 1px solid var(--color-border-input);
+  border-radius: 4px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+}
+
+.p-autocomplete-panel .p-autocomplete-items .p-autocomplete-item {
+  padding: 0.75rem 1rem;
+  color: var(--color-text);
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.p-autocomplete-panel .p-autocomplete-items .p-autocomplete-item:hover {
+  background-color: var(--color-background-polygon);
+}
+
+.p-autocomplete-panel .p-autocomplete-items .p-highlight {
+  background-color: var(--color-main-button);
+  color: white;
+}
+
+.dark .p-autocomplete .p-autocomplete-input {
+  background-color: var(--color-background-polygon);
+  border-color: var(--color-border-input);
+  color: var(--color-text);
+}
+
+.dark .p-autocomplete-panel {
+  background-color: var(--color-background);
+  border-color: var(--color-border-input);
+}
+
+.dark .p-autocomplete-panel .p-autocomplete-items .p-autocomplete-item {
+  color: var(--color-text);
+}
+
+.ng-invalid.ng-touched .p-autocomplete .p-autocomplete-input {
+  border-color: $border-color-red;
+  box-shadow: 0 0 0 2px $bg-opacity-border-red;
+}
+
+.p-autocomplete-input-multiple {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0.5rem;
+  min-height: 3rem;
+  width: 100%;
+  background-color: var(--color-background-input);
+  color: var(--color-text-input);
+  border: 1px solid var(--color-border-input);
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.p-autocomplete-chip-item {
+  display: flex;
+  align-items: center;
+  background-color: var(--color-main-button);
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 1rem;
+  font-size: 0.875rem;
+  transition: background-color 0.2s;
+}
+
+.p-autocomplete-chip-token-icon {
+  margin-left: 0.5rem;
+  cursor: pointer;
+  font-size: 0.75rem;
+}
+
+.p-autocomplete-chip-token-icon:hover {
+  opacity: 0.8;
+}
+
+.p-autocomplete-input-chip {
+  display: flex;
+  flex-grow: 1;
+  min-width: 8rem;
+}
+
+.p-autocomplete-input-chip input {
+  width: 100%;
+  border: none;
+  background-color: transparent;
+  color: var(--color-text-input);
+  padding: 0.25rem 0;
+  outline: none;
+}
+
+.p-autocomplete.p-focus .p-autocomplete-input-multiple {
+  border-color: var(--color-main-button);
+  box-shadow: 0 0 0 2px rgba(8, 125, 234, 0.25);
+  outline: none;
+}
+
+.p-autocomplete .p-autocomplete-dropdown {
+  background-color: var(--color-background-polygon);
+  color: var(--color-main-button);
+  border: none;
+  position: absolute;
+  right: 0;
+  top: 1px;
+  height: 95%;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.dark .p-autocomplete-input-multiple {
+  background-color: var(--color-background-polygon);
+  border-color: var(--color-border-input);
+  color: var(--color-text);
+}
+
+.dark .p-autocomplete-input-chip input {
+  color: var(--color-text);
+}
+
+.dark .p-autocomplete-chip-item {
+  background-color: var(--color-main-button);
+  color: white;
+}
+
+.ng-invalid.ng-touched .p-autocomplete .p-autocomplete-input-multiple {
+  border-color: var(--color-text-invalidated);
+  box-shadow: 0 0 0 2px rgba(234, 8, 8, 0.25);
+}
+
+.p-autocomplete.p-disabled .p-autocomplete-input-multiple {
+  background-color: var(--color-disabled-background);
+  color: var(--color-disabled-handle);
+  cursor: not-allowed;
+}
+
+.p-autocomplete.p-disabled .p-autocomplete-chip-item {
+  opacity: 0.7;
+}
+
+.p-select {
+  width: 100%;
+  font-family: 'Noto Sans Georgian', sans-serif;
+}
+
+.p-select .p-select-label {
+  background-color: var(--color-background-input);
+  color: var(--color-text-input);
+  border: 1px solid var(--color-border-input);
+  padding: 0.75rem 1rem;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+}
+
+.p-select.p-focus .p-select-label {
+  border-color: var(--color-main-button);
+  box-shadow: 0 0 0 2px $bg-opacity-border;
+  outline: none;
+}
+
+.p-select .p-select-dropdown {
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+  padding: 0 0.75rem;
+}
+
+.p-select .p-select-dropdown-icon {
+  color: var(--color-main-button);
+  transition: transform 0.3s;
+}
+
+.p-select.p-select-open .p-select-dropdown-icon {
+  transform: rotate(180deg);
+}
+
+.p-select-panel {
+  background-color: var(--color-background);
+  border: 1px solid var(--color-border-input);
+  border-radius: 4px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+  margin-top: 0.5rem;
+}
+
+.p-select-items {
+  padding: 0.5rem 0;
+}
+
+.p-select-items .p-select-item {
+  padding: 0.75rem 1rem;
+  color: var(--color-text);
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.p-select-items .p-select-item:hover {
+  background-color: var(--color-background-polygon);
+}
+
+.p-select-items .p-highlight {
+  background-color: var(--color-main-button);
+  color: white;
+}
+
+.dark .p-select .p-select-label {
+  background-color: var(--color-background-polygon);
+  border-color: var(--color-border-input);
+  color: var(--color-text);
+}
+
+.dark .p-select-panel {
+  background-color: var(--color-background);
+  border-color: var(--color-border-input);
+}
+
+.dark .p-select-items .p-select-item {
+  color: var(--color-text);
+}
+
+.p-select.p-disabled .p-select-label {
+  background-color: var(--color-disabled-background);
+  color: var(--color-disabled-handle);
+  cursor: not-allowed;
+}
+
+.ng-invalid.ng-touched .p-select .p-select-label {
+  border-color: $border-color-red;
+  box-shadow: 0 0 0 2px $bg-opacity-border-red;
+}

@@ -1,0 +1,26 @@
+<form class="text-text container max-w-6xl mt-5 xl:ml-16" [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
+  <div class="sm:px-6 px-4 mt-2">
+    <h2 class="font-semibold text-3xl">Inscrivez-vous</h2>
+    <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-6 sm:grid-cols-2">
+      @for (field of formFields; track field.name) {
+        <app-form-field
+          [control]="getControl(field.name, field.isNestedInPasswords)"
+          [parentFormGroup]="field.isNestedInPasswords ? signUpForm.get('passwords') : null"
+          [name]="field.name"
+          [label]="field.label"
+          [placeholder]="field.placeholder"
+          [type]="field.type || 'text'"
+          [isSubmitted]="isSubmitted"
+          [isRequired]="field.isRequired"
+          [minLength]="field.minLength || 2"
+          [serverErrors]="serverErrors"
+          [inputClass]="
+            'bg-white border border-gray-300 rounded-md p-3 w-full text-gray-900 text-sm leading-5 focus:ring focus:ring-blue-300 outline-none'
+          ">
+        </app-form-field>
+      }
+    </div>
+
+    <app-dark-blue-button customClass="sm:justify-end" name="Démarrer" type="submit"></app-dark-blue-button>
+  </div>
+</form>

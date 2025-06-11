@@ -1,0 +1,11 @@
+.blue-button {
+  background-color: var(--color-main-button);
+  transition: background-color 0.3s ease-in-out;
+  color: white;
+  align-items: center;
+  border-radius: 5px;
+}
+
+.blue-button:hover {
+  background-color: #087dea;
+}

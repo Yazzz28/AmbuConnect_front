@@ -1,19 +1,22 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import Aura from '@primeng/themes/aura';
 import { PrimeNG } from 'primeng/config';
-import { RouterOutlet } from '@angular/router';
-import { NavBarComponent } from './component/nav-bar/nav-bar.component';
-import { FooterComponent } from './component/footer/footer.component';
+import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
+import { NavBarComponent } from './common/components/nav-bar/nav-bar.component';
+import { FooterComponent } from './common/components/footer/footer.component';
+import { Toast } from 'primeng/toast';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, NavBarComponent, FooterComponent],
+  imports: [RouterOutlet, NavBarComponent, FooterComponent, Toast],
   standalone: true,
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
 export class AppComponent {
   private _primeNg: PrimeNG;
+  private _router: Router = inject(Router);
+  showNavbar: boolean = true;
 
   constructor(primeNg: PrimeNG) {
     this._primeNg = primeNg;
@@ -25,6 +28,12 @@ export class AppComponent {
           order: 'tailwind-base, primeng, tailwind-utilities',
         },
       },
+    });
+    this._router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        const hiddenRoutes: string[] = ['/not-found'];
+        this.showNavbar = !hiddenRoutes.includes(this._router.url);
+      }
     });
   }
 }

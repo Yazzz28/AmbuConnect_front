@@ -1,0 +1,35 @@
+<button
+  (click)="showDialog()"
+  class="btn w-full h-12 px-6 py-2 text-base font-medium rounded-md transition-shadow hover:shadow-md bg-red-600 hover:bg-red-700 text-white flex items-center justify-center gap-2"
+  type="button">
+  <span class="pi pi-trash"></span>
+  Effacer
+</button>
+<p-dialog
+  [(visible)]="visible"
+  [modal]="true"
+  [dismissableMask]="true"
+  maskStyleClass="backdrop-blur-sm"
+  styleClass="!border-0 !bg-backGround responsive-dialog">
+  <ng-template #headless>
+    <div class="flex flex-col">
+      <div class="flex justify-between items-center mb-6 rounded-t-lg bg-header p-4 dialog-header dialog-header-shadow">
+        <h2 class="text-text font-medium text-xl">Suppression</h2>
+        <app-cross-cancel (click)="closeDialog()"></app-cross-cancel>
+      </div>
+
+      <div class="my-3 mx-6">
+        <h3 class="text-text text-lg">Êtes-vous sûr de vouloir supprimer ce transport ?</h3>
+      </div>
+      <div class="flex gap-12 justify-center mb-6 mx-6">
+        <button
+          (click)="confirmDelete()"
+          class="btn w-full sm:w-auto px-3 sm:px-6 py-2 text-base font-medium rounded-md transition-shadow hover:shadow-md bg-red-600 hover:bg-red-700 text-white flex items-center justify-center gap-2"
+          type="button">
+          <span class="pi pi-trash"></span>
+          Effacer
+        </button>
+      </div>
+    </div>
+  </ng-template>
+</p-dialog>

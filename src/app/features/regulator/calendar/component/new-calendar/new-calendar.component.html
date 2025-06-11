@@ -1,0 +1,184 @@
+<p-dialog [(visible)]="visible" [modal]="true" maskStyleClass="backdrop-blur-sm" styleClass="!border-0 !bg-backGround responsive-dialog">
+  <ng-template #headless>
+    <div class="flex flex-col form-container max-w-4xl mx-auto">
+      <div class="flex justify-between items-center mb-4 md:mb-6 rounded-t-lg bg-header p-4 dialog-header shadow-sm">
+        <h2 class="text-text font-semibold text-xl">{{ title }}</h2>
+        <button (click)="closeDialog()" class="text-text hover:bg-gray-200/20 rounded-full p-2 transition-colors close-button" type="button">
+          <span class="pi pi-times"></span>
+        </button>
+      </div>
+
+      <form (ngSubmit)="onSave()" [formGroup]="calendarForm" class="dynamic-form grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
+        <div class="field col-span-1 sm:col-span-2 mb-2">
+          <label class="required text-text block mb-2 font-medium" for="vehicle">Véhicule</label>
+          <p-autoComplete
+            inputId="vehicle"
+            formControlName="vehicle"
+            (completeMethod)="filterVehicles($event)"
+            [suggestions]="filteredVehicles"
+            field="registration"
+            [dropdown]="true"
+            class="input-field w-full"
+            placeholder="Rechercher un véhicule">
+            <ng-template let-v pTemplate="item">
+              {{ v.registration }}
+            </ng-template>
+            <ng-template let-v pTemplate="selectedItem">
+              {{ v.registration }}
+            </ng-template>
+          </p-autoComplete>
+          @if (isSubmitted && calendarForm.get('vehicle')?.invalid) {
+            <small class="p-error mt-1 block"> Le véhicule est requis. </small>
+          }
+        </div>
+
+        <div class="field col-span-1 sm:col-span-2 mb-2">
+          <label class="required text-text block mb-2 font-medium" for="patients">Patients</label>
+          <p-autoComplete
+            (completeMethod)="filterPatients($event)"
+            [dropdown]="true"
+            [multiple]="true"
+            [suggestions]="filteredPatients"
+            class="input-field w-full"
+            dataKey="id"
+            formControlName="patients"
+            inputId="patients"
+            placeholder="Rechercher un patient">
+            <ng-template let-p pTemplate="item"> {{ p.lastname }} - {{ p.firstname }}</ng-template>
+            <ng-template let-p pTemplate="selectedItem"> {{ p.lastname }} - {{ p.firstname }}</ng-template>
+          </p-autoComplete>
+          @if (isSubmitted && calendarForm.get('patients')?.invalid) {
+            <small class="p-error mt-1 block"> Au moins un patient est requis. </small>
+          }
+        </div>
+
+        <div class="field col-span-1 sm:col-span-2 mb-2">
+          <p-select formControlName="type" label="Type de transport" [options]="transportTypes" optionLabel="label" optionValue="value"></p-select>
+          @if (isSubmitted && calendarForm.get('type')?.invalid) {
+            <small class="p-error mt-1 block"> Le type de transport est requis. </small>
+          }
+        </div>
+
+        <app-form-field
+          [control]="calendarForm.get('startPlace')"
+          [inputClass]="
+            'bg-backGroundPolygon border border-text rounded-md p-2 pl-10 w-full focus:ring focus:ring-blue-300 outline-none input-field text-text'
+          "
+          [isRequired]="true"
+          [isSubmitted]="isSubmitted"
+          [parentFormGroup]="calendarForm"
+          label="Lieu de départ"
+          name="startPlace"
+          placeholder="Lieu de départ"
+          type="text">
+        </app-form-field>
+
+        <app-form-field
+          [control]="calendarForm.get('endPlace')"
+          [inputClass]="
+            'bg-backGroundPolygon border border-text rounded-md p-2 w-full focus:ring focus:ring-blue-300 outline-none text-text input-field'
+          "
+          [isRequired]="true"
+          [isSubmitted]="isSubmitted"
+          [parentFormGroup]="calendarForm"
+          label="Lieu d'arrivée"
+          name="endPlace"
+          placeholder="Lieu d'arrivée"
+          type="text">
+        </app-form-field>
+
+        <app-form-field
+          [control]="calendarForm.get('startAt')"
+          [inputClass]="
+            'bg-backGroundPolygon border border-text rounded-md p-2 w-full focus:ring focus:ring-blue-300 outline-none text-text input-field'
+          "
+          [isRequired]="true"
+          [isSubmitted]="isSubmitted"
+          label="Date et heure de début"
+          name="startAt"
+          type="datetime-local">
+        </app-form-field>
+
+        <app-form-field
+          [control]="calendarForm.get('endAt')"
+          [inputClass]="
+            'bg-backGroundPolygon border border-text rounded-md p-2 w-full focus:ring focus:ring-blue-300 outline-none text-text input-field'
+          "
+          [isRequired]="true"
+          [isSubmitted]="isSubmitted"
+          label="Date et heure de fin"
+          name="endAt"
+          type="datetime-local">
+        </app-form-field>
+
+        <app-form-field
+          [control]="calendarForm.get('isEmergency')"
+          [inputClass]="''"
+          [isRequired]="false"
+          [isSubmitted]="isSubmitted"
+          label="Urgence"
+          name="isEmergency"
+          type="checkbox">
+        </app-form-field>
+
+        <app-form-field
+          [control]="calendarForm.get('contactName')"
+          [inputClass]="
+            'bg-backGroundPolygon border border-text rounded-md p-2 w-full focus:ring focus:ring-blue-300 outline-none text-text input-field'
+          "
+          [isRequired]="false"
+          [isSubmitted]="isSubmitted"
+          label="Nom du contact"
+          name="contactName"
+          placeholder="Nom du contact"
+          type="text">
+        </app-form-field>
+
+        <app-form-field
+          [control]="calendarForm.get('contactPhone')"
+          [inputClass]="
+            'bg-backGroundPolygon border border-text rounded-md p-2 w-full focus:ring focus:ring-blue-300 outline-none text-text input-field'
+          "
+          [isRequired]="false"
+          [isSubmitted]="isSubmitted"
+          label="Téléphone du contact"
+          name="contactPhone"
+          placeholder="Téléphone du contact"
+          type="tel">
+        </app-form-field>
+
+        <app-form-field
+          [control]="calendarForm.get('note')"
+          [inputClass]="
+            'bg-backGroundPolygon border border-text rounded-md p-2 w-full focus:ring focus:ring-blue-300 outline-none text-text input-field'
+          "
+          [isRequired]="false"
+          [isSubmitted]="isSubmitted"
+          label="Note"
+          name="note"
+          type="textarea">
+        </app-form-field>
+
+        <div class="col-span-1 sm:col-span-2 mt-6 border-t pt-6">
+          <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+            <button
+              (click)="copyTransportInfo()"
+              class="btn w-full h-12 px-4 py-2 text-base font-medium rounded-md transition-shadow hover:shadow-md bg-mainButton text-text flex items-center justify-center gap-2"
+              type="button">
+              <span class="pi pi-copy"></span>
+              Copier info
+            </button>
+
+            <app-sky-blue-button customClass="w-full" type="submit" name="Sauvegarder"> </app-sky-blue-button>
+
+            @if (eventId) {
+              <div class="w-full sm:w-auto">
+                <app-delete-calendar [eventId]="eventId" (visibleForm)="onDeleteSuccess($event)"> </app-delete-calendar>
+              </div>
+            }
+          </div>
+        </div>
+      </form>
+    </div>
+  </ng-template>
+</p-dialog>

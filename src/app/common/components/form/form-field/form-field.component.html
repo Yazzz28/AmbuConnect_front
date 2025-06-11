@@ -1,0 +1,54 @@
+<div class="sm:col-span-3 relative">
+  @if (shouldShowError) {
+    @for (message of getAllErrorMessages(); track message) {
+      <span class="text-textInvalidated block text-xs font-medium min-h-[20px]">
+        {{ message }}
+      </span>
+    }
+  }
+
+  @if (type === 'checkbox') {
+    <div class="flex items-center">
+      <input
+        type="checkbox"
+        [name]="name"
+        [id]="name"
+        [checked]="control?.value"
+        (change)="onCheckboxChange($event)"
+        (blur)="onBlur()"
+        class="h-4 w-4 text-primary focus:ring-primary" />
+      <label [for]="name" class="ml-2 block text-sm font-medium text-text" [class.required]="isRequired">
+        {{ label }}
+      </label>
+    </div>
+  } @else {
+    <label [for]="name" class="block text-sm font-medium text-text" [class.required]="isRequired">
+      {{ label }}
+    </label>
+    <div class="relative">
+      @if (type !== 'select') {
+        <input
+          [type]="inputType"
+          [name]="name"
+          [id]="name"
+          [placeholder]="placeholder"
+          [ngClass]="inputClass"
+          [value]="control?.value || ''"
+          (input)="onInputChange($event)"
+          (blur)="onBlur()" />
+        @if (type === 'password') {
+          <app-password-toggle [visible]="showPassword" (visibilityChange)="togglePasswordVisibility($event)"> </app-password-toggle>
+        }
+      } @else {
+        <select [name]="name" [id]="name" [ngClass]="inputClass" [value]="control?.value || ''" (change)="onInputChange($event)" (blur)="onBlur()">
+          <option value="" disabled selected>{{ placeholder }}</option>
+          @for (option of options; track option) {
+            <option [value]="option.value">
+              {{ option.label }}
+            </option>
+          }
+        </select>
+      }
+    </div>
+  }
+</div>

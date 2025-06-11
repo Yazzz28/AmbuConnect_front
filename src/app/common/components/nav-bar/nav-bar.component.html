@@ -1,0 +1,105 @@
+<div class="navbar-container fixed top-0 w-full z-50 shadow-md" [ngClass]="{ scrolled: isScrolled }">
+  @if (isMobileView) {
+    <div class="mobile-navbar flex items-center justify-between p-3">
+      <button type="button" class="burger-button p-2 rounded-full" (click)="toggleMobileMenu()" aria-label="Menu principal">
+        <i class="pi" [ngClass]="isMobileMenuOpen ? 'pi-times' : 'pi-bars'"></i>
+      </button>
+
+      <a href="/" class="flex items-center justify-center">
+        <img [src]="logo" alt="Logo" class="h-10 logo-svg" />
+      </a>
+
+      <div class="flex items-center">
+        <app-switch-dark-mode></app-switch-dark-mode>
+      </div>
+    </div>
+  }
+
+  @if (isMobileView && isMobileMenuOpen) {
+    <div class="mobile-menu">
+      <div class="mobile-menu-items p-4 space-y-2">
+        @for (item of items; track item.label) {
+          @if (item.items) {
+            <div class="dropdown-container">
+              <button
+                type="button"
+                class="mobile-menu-item w-full text-left p-3 rounded-md flex items-center"
+                (click)="item.expanded = !item.expanded">
+                <i class="{{ item.icon }} mr-2"></i>
+                <span>{{ item.label }}</span>
+                <i class="pi ml-auto" [ngClass]="item.expanded ? 'pi-chevron-up' : 'pi-chevron-down'"></i>
+              </button>
+
+              @if (item.expanded) {
+                <div class="submenu pl-4 mt-1 space-y-1">
+                  @for (subItem of item.items; track subItem.label) {
+                    <a [routerLink]="subItem.routerLink" class="mobile-submenu-item p-2 rounded-md flex items-center" (click)="closeMobileMenu()">
+                      <i class="{{ subItem.icon }} mr-2"></i>
+                      <span>{{ subItem.label }}</span>
+                    </a>
+                  }
+                </div>
+              }
+            </div>
+          } @else {
+            <a
+              [routerLink]="item.routerLink"
+              [ngClass]="{ 'bg-mainButton': item.styleClass?.includes('bg-mainButton') }"
+              class="mobile-menu-item w-full text-left p-3 rounded-md flex items-center"
+              (click)="item.command ? item.command() : closeMobileMenu()">
+              <i class="{{ item.icon }} mr-2"></i>
+              <span>{{ item.label }}</span>
+            </a>
+          }
+        }
+      </div>
+    </div>
+  }
+
+  @if (!isMobileView) {
+    <div class="desktop-navbar flex items-center justify-around p-3">
+      <a href="/" class="flex items-center ml-4">
+        <img [src]="logo" alt="Logo" class="h-10 logo-svg" />
+      </a>
+
+      <div class="nav-links flex items-center space-x-1">
+        @for (item of items; track item.label) {
+          @if (item.items) {
+            <div class="dropdown-container relative" #dropdownContainer>
+              <button type="button" class="nav-item px-3 py-2 rounded-md flex items-center" (click)="toggleDropdown(dropdownContainer)">
+                <i class="{{ item.icon }} mr-2"></i>
+                <span>{{ item.label }}</span>
+                <i class="pi pi-chevron-down ml-1 text-xs"></i>
+              </button>
+
+              <div class="dropdown-menu absolute top-full left-0 mt-1 rounded-md shadow-lg hidden">
+                @for (subItem of item.items; track subItem.label) {
+                  <a
+                    [routerLink]="subItem.routerLink"
+                    class="dropdown-item block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700"
+                    (click)="closeAllDropdowns()">
+                    <i class="{{ subItem.icon }} mr-2"></i>
+                    <span>{{ subItem.label }}</span>
+                  </a>
+                }
+              </div>
+            </div>
+          } @else {
+            <a
+              [routerLink]="item.routerLink"
+              [ngClass]="{ 'bg-mainButton text-white': item.styleClass?.includes('bg-mainButton') }"
+              class="nav-item px-3 py-2 rounded-md flex items-center"
+              (click)="item.command ? item.command() : null">
+              <i class="{{ item.icon }} mr-2"></i>
+              <span>{{ item.label }}</span>
+            </a>
+          }
+        }
+      </div>
+
+      <div class="flex items-center mr-4">
+        <app-switch-dark-mode></app-switch-dark-mode>
+      </div>
+    </div>
+  }
+</div>
